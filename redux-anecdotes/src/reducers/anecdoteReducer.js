@@ -34,6 +34,11 @@ const reducer = (state = initialState, action) => {
       // Find the index of the anecdote to update and then replace it with the updated anecdote
       const anecdotes = state.map(a => a.id === id ? updatedAnecdote : a)
       return anecdotes
+    case 'ADD_ANECDOTE':
+      // Format the new anecdote to the right object format
+      const newAnecdote = asObject(action.content)
+      // Add the new anecdote to the list of anecdotes
+      return [...state, newAnecdote]
     default:
       return state
   }
