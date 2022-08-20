@@ -17,6 +17,22 @@ const asObject = (anecdote) => {
   }
 }
 
+// Action creator for voting
+export const vote = (id) => {
+  return {
+    type: 'VOTE',
+    id
+  }
+}
+
+// Action creator for new anecdotes
+export const createAnecdote = (content) => {
+  return {
+    type: 'ADD_ANECDOTE',
+    content
+  }
+}
+
 const initialState = anecdotesAtStart.map(asObject)
 
 const reducer = (state = initialState, action) => {
