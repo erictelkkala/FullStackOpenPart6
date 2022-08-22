@@ -15,6 +15,8 @@ const AnecdoteForm = () => {
     console.log('addNewAnecdote', content)
     // Dispatch the action to add the anecdote
     dispatch(createAnecdote(content))
+    // Clear the input field
+    event.target.anecdote.value = ''
 
     // Dispatch the action to set the notification
     dispatch(setNotification({ message: `You added "${content}"` }))
