@@ -8,6 +8,10 @@ const Notification = () => {
     padding: 10,
     borderWidth: 1,
   }
+  // Only show the notification if the message if not empty
+  if (notification.message === '') {
+    return null
+  }
   return <div style={style}>{notification.message}</div>
 }
 

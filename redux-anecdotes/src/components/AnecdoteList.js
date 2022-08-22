@@ -1,5 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { vote } from '../reducers/anecdoteReducer'
+import {
+  setNotification,
+  removeNotification,
+} from '../reducers/notificationReducer'
 
 const AnecdoteList = () => {
   // The state is immutable after refactoring into Redux Toolkit, stack trace didn't help at all
@@ -11,10 +15,21 @@ const AnecdoteList = () => {
   const sortedAnecdotes = anecdotes.sort((a, b) => b.votes - a.votes)
   const dispatch = useDispatch()
 
-  const handleVote = (id) => {
+  const handleVote = (id, content) => {
     console.log('Vote ID:', id)
     // Dispatch the vote action
     dispatch(vote(id))
+
+    // Dispatch the action to set the notification
+    dispatch(
+      setNotification({
+        message: `You voted for "${content}"`,
+      })
+    )
+    // Dispatch the action to remove the notification
+    setTimeout(() => {
+      dispatch(removeNotification())
+    }, 5000)
   }
 
   return (
@@ -24,7 +39,9 @@ const AnecdoteList = () => {
           <div>{anecdote.content}</div>
           <div>
             has {anecdote.votes}
-            <button onClick={() => handleVote(anecdote.id)}>vote</button>
+            <button onClick={() => handleVote(anecdote.id, anecdote.content)}>
+              vote
+            </button>
           </div>
         </div>
       ))}
