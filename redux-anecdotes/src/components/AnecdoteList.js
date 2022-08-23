@@ -35,6 +35,7 @@ const AnecdoteList = () => {
 
   // Sort the anecdotes by votes
   const sortedAnecdotes = anecdotes.sort((a, b) => b.votes - a.votes)
+  console.log('sortedAnecdotes: ', sortedAnecdotes)
 
   // Filter the anecdotes by the filter
   const filteredAnecdotes = sortedAnecdotes.filter((anecdote) => {
