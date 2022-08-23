@@ -4,6 +4,7 @@ import {
   setNotification,
   removeNotification,
 } from '../reducers/notificationReducer'
+import anecdoteService from '../services/anecdotes'
 
 const AnecdoteForm = () => {
   const dispatch = useDispatch()
@@ -13,8 +14,12 @@ const AnecdoteForm = () => {
     // Get the anecdote content from the input field
     const content = event.target.anecdote.value
     console.log('addNewAnecdote', content)
-    // Dispatch the action to add the anecdote
-    dispatch(createAnecdote(content))
+
+    anecdoteService.create(content).then((newAnecdote) => {
+      // Dispatch the action to add the anecdote
+      dispatch(createAnecdote(newAnecdote))
+    })
+
     // Clear the input field
     event.target.anecdote.value = ''
 
