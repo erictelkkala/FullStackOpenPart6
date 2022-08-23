@@ -14,24 +14,33 @@ const anecdoteSlice = createSlice({
       const anecdote = state.find((a) => a.id === action.payload)
       anecdote.votes++
     },
-    createAnecdote: (state, action) => {
-      // console.log('Slice.create payload:', action.payload)
+    // These following 2 reducers might look like the same
+    // But the latter one is used to append multiple anecdotes at once, hence the ...
+    createNewAnecdote: (state, action) => {
       state.push(action.payload)
     },
-    setAnecdotes: (state, action) => {
+    appendAnecdotes: (state, action) => {
       // console.log('Slice.setAnecdotes payload:', action.payload)
       state.push(...action.payload)
     }
   },
 })
 
-export const { vote, createAnecdote, setAnecdotes } = anecdoteSlice.actions
+export const { vote, createNewAnecdote, appendAnecdotes: appendAnecdote } = anecdoteSlice.actions
 
 // Async action creators
 export const initializeAnecdotes = () => {
   return async (dispatch) => {
     const anecdotes = await anecdoteService.getAll()
-    dispatch(setAnecdotes(anecdotes))
+    dispatch(appendAnecdote(anecdotes))
+  }
+}
+
+export const createAnecdote = (content) => {
+  console.log('Action creator', content)
+  return async dispatch => {
+    const newNote = await anecdoteService.createNewAnecdote(content)
+    dispatch(createNewAnecdote(newNote))
   }
 }
 

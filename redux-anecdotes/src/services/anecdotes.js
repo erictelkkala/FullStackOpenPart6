@@ -18,12 +18,13 @@ const asObject = (anecdote) => {
   }
 
 }
-const create = async (content) => {
+const createNewAnecdote = async (content) => {
   const anecdote = asObject(content)
+  console.log('createNewAnecdote: ', anecdote)
   const response = await axios.post(baseUrl, anecdote)
-  console.log('create: ', response.data)
+  console.log('create: ', response)
   return response.data
 }
 
 
-export default { getAll, create }
+export default { getAll, createNewAnecdote }
