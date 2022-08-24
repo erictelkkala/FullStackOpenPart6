@@ -1,10 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { vote } from '../reducers/anecdoteReducer'
 import {
   setNotification,
   removeNotification,
 } from '../reducers/notificationReducer'
-// import { getFilter } from '../reducers/filterReducer'
+import { voteForAnecdote } from '../reducers/anecdoteReducer'
 
 const AnecdoteList = () => {
   // The state is immutable after refactoring into Redux Toolkit, stack trace didn't help at all
@@ -16,15 +15,15 @@ const AnecdoteList = () => {
 
   const dispatch = useDispatch()
 
-  const handleVote = (id, content) => {
-    console.log('Vote ID:', id)
+  const handleVote = (anecdote) => {
+    console.log('Vote ID:', anecdote.id)
     // Dispatch the vote action
-    dispatch(vote(id))
+    dispatch(voteForAnecdote(anecdote))
 
     // Dispatch the action to set the notification
     dispatch(
       setNotification({
-        message: `You voted for "${content}"`,
+        message: `You voted for "${anecdote.content}"`,
       })
     )
     // Dispatch the action to remove the notification
@@ -54,9 +53,7 @@ const AnecdoteList = () => {
           <div>{anecdote.content}</div>
           <div>
             has {anecdote.votes}
-            <button onClick={() => handleVote(anecdote.id, anecdote.content)}>
-              vote
-            </button>
+            <button onClick={() => handleVote(anecdote)}>vote</button>
           </div>
         </div>
       ))}
