@@ -1,13 +1,9 @@
-// import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { setFilter } from '../reducers/filterReducer'
 
-const FilterForm = () => {
-  //   const [filter, setFilter] = useState('')
-  const dispatch = useDispatch()
-
+const FilterForm = (props) => {
   const handleFilterChange = (event) => {
-    dispatch(setFilter({ filter: event.target.value }))
+    props.setFilter({ filter: event.target.value })
   }
 
   const style = {
@@ -22,4 +18,6 @@ const FilterForm = () => {
   )
 }
 
-export default FilterForm
+const ConnectedFilterForm = connect(null, { setFilter })(FilterForm)
+
+export default ConnectedFilterForm
